@@ -1,21 +1,38 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FollowPlayerX : MonoBehaviour
 {
-    public GameObject plane;
-    private Vector3 offset;
+    public GameObject player;
+    private Vector3 offsetThirdPerson;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Vector3 offsetFirstPerson = new Vector3(0, 1.68f, 0.5f);
 
-    // Start is called before the first frame update
+    public bool isFirstPerson = false;
     void Start()
     {
-        offset = transform.position - plane.transform.position;
+        offsetThirdPerson = transform.position - player.transform.position;
     }
 
     // Update is called once per frame
-    void Update()
+   void LateUpdate()
     {
-        transform.position = plane.transform.position + offset;
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            isFirstPerson = !isFirstPerson;
+        }
+    
+        if (isFirstPerson)
+        {
+            // Poziția camerei exact la "ochii" avionului
+            transform.position = player.transform.position + offsetFirstPerson;
+            // Camera se uită în direcția în care avionul se mișcă
+            transform.rotation = player.transform.rotation;
+        }
+        else
+        {
+            // Logica ta actuală de Third Person
+            transform.position = player.transform.position + offsetThirdPerson;
+            transform.LookAt(player.transform);
+        }
     }
 }

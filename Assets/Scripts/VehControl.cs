@@ -7,6 +7,7 @@ public class VehControl : MonoBehaviour
     private float inputHorizontal;
     private float inputForward;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public string inputID;
     void Start()
     {
         
@@ -15,8 +16,8 @@ public class VehControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        inputHorizontal = Input.GetAxis("Horizontal");
-        inputForward = Input.GetAxis("Vertical");
+        inputHorizontal = Input.GetAxis("Horizontal" + inputID);
+        inputForward = Input.GetAxis("Vertical" + inputID);
 
 
         transform.Translate(Vector3.forward * speed * Time.deltaTime * inputForward);
